@@ -22,7 +22,7 @@ class SeleniumBrowser:
         try:
             element = self._browser.find_element('xpath', '//*[@id="cbPesquisa"]')
             Select(element).select_by_value(value_element)
-            xpath = f'//*[@id="campo_{value_search}"]'
+            xpath = f'//*[@id="campo_{value_element}"]'
             self._browser.find_element('xpath', xpath).send_keys(value_search)
             self._browser.find_element('xpath', '//*[@id="botaoConsultarProcessos"]').click()
             return self.browser.page_source
