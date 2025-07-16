@@ -1,0 +1,5 @@
+alembic==1.16.4
+psycopg2-binary==2.9.10
+psycopg2==2.9.10
+selenium==4.34.2
+SQLAlchemy==2.0.41
