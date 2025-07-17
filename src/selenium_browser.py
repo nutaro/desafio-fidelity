@@ -18,7 +18,7 @@ class SeleniumBrowser:
     def browser(self) -> webdriver.Firefox:
         return self._browser
 
-    def search_by_nome_parte(self, value_element: str, value_search: str) -> str:
+    def search(self, value_element: str, value_search: str) -> str:
         try:
             element = self._browser.find_element('xpath', '//*[@id="cbPesquisa"]')
             Select(element).select_by_value(value_element)

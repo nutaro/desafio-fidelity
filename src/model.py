@@ -79,7 +79,7 @@ class ServicoPesquisa(Base):
     web_site_id: Mapped[int] = mapped_column(ForeignKey('web_site.id'))
     tipo: Mapped[String] = mapped_column(String(), nullable=False)
     servico: Mapped[String] = mapped_column(String(), nullable=False)
-    resultado: Mapped[String] = mapped_column(String(), nullable=False)
+    resultado: Mapped[String] = mapped_column(String(), nullable=True)
 
 
 class Pesquisa(Base):
@@ -91,9 +91,9 @@ class Pesquisa(Base):
     nome: Mapped[String] = mapped_column(String(), nullable=False)
     cpf: Mapped[String] = mapped_column(String(11), nullable=False)
     rg: Mapped[String] = mapped_column(String, nullable=True)
-    uf_rg: Mapped[String] = mapped_column(String(2), nullable=True)
+    uf_rg: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
     nascimento: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
-    uf_nascimento: Mapped[String] = mapped_column(String(2), nullable=False)
+    uf_nascimento: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
     nome_mae: Mapped[String] = mapped_column(String(), nullable=False)
     data_entrada: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     data_conclusao: Mapped[datetime] = mapped_column(DateTime(timezone=True))
