@@ -11,7 +11,7 @@ class SeleniumBrowser:
 
     def __init__(self):
         options = Options()
-        service = Service(Config.EXECUTABLE_PATH)
+        service = Service(executable_path=Config.EXECUTABLE_PATH)
         self._browser = webdriver.Firefox(service=service, options=options)
 
     @property

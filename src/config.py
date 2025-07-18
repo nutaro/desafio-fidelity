@@ -1,6 +1,6 @@
 class Config:
 
-    EXECUTABLE_PATH = '/usr/bin/firefox'
+    EXECUTABLE_PATH = '/home/victor/geckodriver'
     DATABASE_DRIVER = 'postgresql+psycopg2'
     DATABASE_USER = 'postgres'
     DATABASE_PASSWORD = 'example'

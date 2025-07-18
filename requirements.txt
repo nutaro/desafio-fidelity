@@ -1,5 +1,7 @@
 alembic==1.16.4
 psycopg2-binary==2.9.10
+lxml==6.0.0
 psycopg2==2.9.10
+regex==2024.11.6
 selenium==4.34.2
 SQLAlchemy==2.0.41

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import String, ForeignKey, DateTime, Integer
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 
@@ -16,6 +16,8 @@ class Website(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[String] = mapped_column(String(), unique=False)
     url: Mapped[String] = mapped_column(String(), unique=False)
+
+    servico_pesquisa: Mapped['ServicoPesquisa'] = relationship(back_populates='web_site')
 
 
 class Funcionario(Base):
@@ -70,16 +72,22 @@ class LotePesquisa(Base):
     data_criacao: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     data_conclusao: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
+    pesquisa: Mapped['Pesquisa'] = relationship(back_populates='lote_pesquisa')
+
 
 class ServicoPesquisa(Base):
 
     __tablename__ = 'servico_pesquisa'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    lote_id: Mapped[int] = mapped_column(ForeignKey('lote.id'), nullable=False)
     web_site_id: Mapped[int] = mapped_column(ForeignKey('web_site.id'))
     tipo: Mapped[String] = mapped_column(String(), nullable=False)
     servico: Mapped[String] = mapped_column(String(), nullable=False)
     resultado: Mapped[String] = mapped_column(String(), nullable=True)
+
+    servico_pesquisa: Mapped['Pesquisa'] = relationship(back_populates='servico_pesquisa')
+    web_site: Mapped['Website'] = relationship(back_populates='servico_pesquisa')
 
 
 class Pesquisa(Base):
@@ -94,7 +102,10 @@ class Pesquisa(Base):
     uf_rg: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
     nascimento: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
     uf_nascimento: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
-    nome_mae: Mapped[String] = mapped_column(String(), nullable=False)
+    nome_mae: Mapped[String] = mapped_column(String(), nullable=True)
     data_entrada: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    data_conclusao: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    data_conclusao: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
     anexo: Mapped[String] = mapped_column(String(), nullable=True)
+
+    servico_pesquisa: Mapped['ServicoPesquisa'] = relationship(back_populates='servico_pesquisa')
+    lote_pesquisa: Mapped['LotePesquisa'] = relationship(back_populates='pesquisa')
