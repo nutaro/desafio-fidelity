@@ -1,0 +1,3 @@
+class ToManyValuesException(Exception):
+    pass
+

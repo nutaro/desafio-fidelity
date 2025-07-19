@@ -10,3 +10,19 @@ services:
       - ./db-data:/var/lib/postgresql/data/pgdata
     ports:
       - 5432:5432
+
+  crawler:
+    container_name: crawler
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/opt/app
+    environment:
+      EXECUTABLE_PATH: "/opt/geckodriver"
+      DATABASE_DRIVER: "postgresql+psycopg2"
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: example
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: postgres
+
