@@ -13,3 +13,7 @@ migration:
 .PHONY: crawler
 crawler:
 	docker-compose up crawler -d
+
+.PHONY: down
+down:
+	docker-compose down
