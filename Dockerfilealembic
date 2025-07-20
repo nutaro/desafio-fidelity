@@ -1,0 +1,17 @@
+FROM python:3.13.5-slim-bookworm
+
+WORKDIR /opt
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt install libpq-dev gcc -y
+
+ADD alembic alembic
+ADD alembic.ini alembic.ini
+ADD src src
+
+RUN sed -i 's\localhost\postgres\g' /opt/alembic.ini
+
+RUN pip install alembic psycopg2-binary psycopg2
+
+CMD ["python", "-m", "alembic", "upgrade", "head"]

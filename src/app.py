@@ -21,7 +21,7 @@ from model import Pesquisa, ServicoPesquisa, Lote
 logger = CustomLogger().get_logger()
 
 
-class SearchProcess:
+class BuscaProcessos:
 
     def __init__(self) -> None:
         self._session = get_session()
@@ -74,8 +74,6 @@ class SearchProcess:
         except DatabaseError as e:
             logger.exception(f"Não foi possivel gravar a consulta {pesquisa.id} com resultado {resultado}")
 
-    # Esse método tem como função enquadrar a pesquisa de acordo com o resultado obtido na pesquisa como Nada Consta, Consta
-    # Criminal e Consta Cível.
     @staticmethod
     def consta_processo(content: str) -> str:
         content = html.fromstring(content)
@@ -108,5 +106,5 @@ class SearchProcess:
 
 
 if __name__ == '__main__':
-    search = SearchProcess()
-    search.busca()
+    busca = BuscaProcessos()
+    busca.busca()
