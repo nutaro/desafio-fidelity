@@ -10,6 +10,7 @@ from sqlalchemy import select, Row
 from sqlalchemy.exc import DatabaseError
 from sqlalchemy.sql import and_
 
+from decorator import time_it
 from database import get_session
 from exceptions import InvalidSearchException
 from log import CustomLogger
@@ -25,16 +26,15 @@ class SearchProcess:
     def __init__(self) -> None:
         self._session = get_session()
 
-    def get_consultas(self) -> Sequence[Row[tuple[Pesquisa]]]:
+    def get_consultas(self, page: int, limit: int) -> Sequence[Row[tuple[Pesquisa]]]:
         statement = select(Pesquisa).join(ServicoPesquisa, Pesquisa.servico_pesquisa_id == ServicoPesquisa.id)
         statement = statement.join(Lote, Lote.id == ServicoPesquisa.lote_id)
         statement = statement.where(and_(Pesquisa.data_conclusao == None, ServicoPesquisa.resultado == None))
+        statement = statement.limit(limit).offset(page * limit)
         return self._session.execute(statement).fetchall()
 
-    # Esse método possui a função de consultar a pesquisa no banco de dados e executá-la utilizando a biblioteca Selenoid.
-    # A parte da execução é aplicada utilizando o método executaPesquisa().
     def busca(self) -> None:
-        for pesquisa in self.get_consultas():
+        for pesquisa in self.get_consultas(0, 100):
             try:
                 pesquisa = self._session.merge(pesquisa[0])
                 site = pesquisa.servico_pesquisa.web_site.url
@@ -44,7 +44,10 @@ class SearchProcess:
                 self.grava_consulta(pesquisa, resultado)
             except InvalidSearchException as e:
                 logger.warning(e.msg)
+            except Exception:
+                logger.exception(f"Falha ao buscar pesquisa {pesquisa.id}")
 
+    @time_it
     def consulta_pesquisa(self, pesquisa: Pesquisa, site: str, tipo: str) -> str:
         html_content = None
         if tipo == "documento" and pesquisa.cpf is None and pesquisa.rg is None:
