@@ -17,3 +17,7 @@ crawler:
 .PHONY: down
 down:
 	docker-compose down
+
+.PHONY: logs
+logs:
+	docker container logs -f crawler
