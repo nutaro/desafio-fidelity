@@ -16,4 +16,6 @@ def time_it(function: Callable) -> Callable:
         function(*args, **kwargs)
         stop_time = datetime.now(tz=ZoneInfo('America/Sao_Paulo'))
         logger.info(f'Finalizada {function.__name__} na {stop_time}')
+        tempo_total = stop_time - start_time
+        logger.info(f'A função {function.__name__} levou {tempo_total.total_seconds()} segundos')
     return wrapper
