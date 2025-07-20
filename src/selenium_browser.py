@@ -27,7 +27,7 @@ class SeleniumBrowser:
 
     def search(self, value_element: str, value_search: str) -> str:
         try:
-            logger.info(f"Buscando {value_search} with value {value_element}")
+            logger.info(f"Buscando {value_search} com parametro {value_element}")
             element = self._browser.find_element('xpath', '//*[@id="cbPesquisa"]')
             Select(element).select_by_value(value_element)
             xpath = f'//*[@id="campo_{value_element}"]'
