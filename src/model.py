@@ -83,7 +83,6 @@ class ServicoPesquisa(Base):
     lote_id: Mapped[int] = mapped_column(ForeignKey('lote.id'), nullable=False)
     web_site_id: Mapped[int] = mapped_column(ForeignKey('web_site.id'))
     tipo: Mapped[String] = mapped_column(String(), nullable=False)
-    servico: Mapped[String] = mapped_column(String(), nullable=False)
     resultado: Mapped[String] = mapped_column(String(), nullable=True)
 
     servico_pesquisa: Mapped['Pesquisa'] = relationship(back_populates='servico_pesquisa')
@@ -103,7 +102,7 @@ class Pesquisa(Base):
     nascimento: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
     uf_nascimento: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
     nome_mae: Mapped[String] = mapped_column(String(), nullable=True)
-    data_entrada: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    data_entrada: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     data_conclusao: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
     anexo: Mapped[String] = mapped_column(String(), nullable=True)
 

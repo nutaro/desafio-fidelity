@@ -11,7 +11,7 @@ def get_engine() -> Engine:
     host = Config.DATABASE_HOST
     port = Config.DATABASE_PORT
     database = Config.DATABASE_NAME
-    return create_engine(f'{driver}://{user}:{password}@{host}:{port}/{database}', echo=True)
+    return create_engine(f'{driver}://{user}:{password}@{host}:{port}/{database}', echo=False)
 
 
 def get_session() -> Session:
