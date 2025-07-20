@@ -94,7 +94,7 @@ class Pesquisa(Base):
     __tablename__ = 'pesquisa'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    servico_pesquisa_id: Mapped[int] = mapped_column(ForeignKey('servico_pesquisa.id'))
+    servico_pesquisa_id: Mapped[int] = mapped_column(ForeignKey('servico_pesquisa.id'), unique=True)
     nome: Mapped[String] = mapped_column(String(), nullable=False)
     cpf: Mapped[String] = mapped_column(String(11), nullable=False)
     rg: Mapped[String] = mapped_column(String, nullable=True)
