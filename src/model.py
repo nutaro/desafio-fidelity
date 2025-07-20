@@ -53,7 +53,7 @@ class Lote(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     funcionario_id: Mapped[int] = mapped_column(ForeignKey('funcionario.id'), nullable=False)
     prazo: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    tipo: Mapped[String] = mapped_column(String, nullable=False)
+    tipo: Mapped[String] = mapped_column(String, nullable=True)
     prioridade: Mapped[int] = mapped_column(Integer, nullable=False)
     data_criacao: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -96,7 +96,7 @@ class Pesquisa(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     servico_pesquisa_id: Mapped[int] = mapped_column(ForeignKey('servico_pesquisa.id'), unique=True)
     nome: Mapped[String] = mapped_column(String(), nullable=False)
-    cpf: Mapped[String] = mapped_column(String(11), nullable=False)
+    cpf: Mapped[String] = mapped_column(String(11), nullable=True)
     rg: Mapped[String] = mapped_column(String, nullable=True)
     uf_rg: Mapped[int] = mapped_column(ForeignKey('estado.id'), nullable=True)
     nascimento: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
